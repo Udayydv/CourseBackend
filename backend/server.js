@@ -10,22 +10,28 @@ dotenv.config();
 const app = express();
 
 // ------------------- CORS CONFIG -------------------
-// ✅ Allow requests only from your Vercel frontend and local dev
+// ✅ Allow only your Vercel frontend + local dev
 const allowedOrigins = [
-  "https://course-frontend-lovat.vercel.app/", // your Vercel frontend domain
-  "http://localhost:5173"              // local dev for Vite
+  "https://course-frontend-lovat.vercel.app", // your frontend on Vercel
+  "http://localhost:5173" // for local testing (Vite)
 ];
+
+app.use((req, res, next) => {
+  console.log("🔹 Request from origin:", req.headers.origin);
+  next();
+});
 
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("❌ Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
 }));
 
 // ------------------- MIDDLEWARE -------------------
