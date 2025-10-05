@@ -12,8 +12,8 @@ const app = express();
 // ------------------- CORS CONFIG -------------------
 // ✅ Allow only your Vercel frontend + local dev
 const allowedOrigins = [
-  "https://course-frontend-lovat.vercel.app", // your frontend on Vercel
-  "http://localhost:5173" // for local testing (Vite)
+  "https://lms-frontend-six-wheat.vercel.app/", // your frontend on Vercel
+  // "http://localhost:5173" // for local testing (Vite)
 ];
 
 app.use((req, res, next) => {
