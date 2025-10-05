@@ -12,9 +12,10 @@ const app = express();
 
 // ------------------- CORS CONFIG -------------------
 // ✅ Allow only your frontend (Vercel) + localhost (for testing)
+// ------------------- CORS CONFIG -------------------
 const allowedOrigins = [
-  "https://lms-frontend-six-wheat.vercel.app/", // production frontend (no trailing slash!)
-  "http://localhost:5173",                     // local Vite dev
+  "https://lms-frontend-six-wheat.vercel.app",
+  "http://localhost:5173",
 ];
 
 // 🔍 Log origin for debugging
@@ -23,22 +24,25 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Must be before any routes
+// ✅ Use simplified and guaranteed CORS handler
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow tools like Postman
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // ✅ allow cookies / credentials
+    origin: allowedOrigins,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// ✅ Handle preflight requests globally
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  return res.status(200).end();
+});
+
 
 // ------------------- MIDDLEWARE -------------------
 app.use(express.json());
