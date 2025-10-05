@@ -13,7 +13,7 @@ const app = express();
 // ------------------- CORS CONFIG -------------------
 // ✅ Allow only your frontend (Vercel) + localhost (for testing)
 const allowedOrigins = [
-  "https://lms-frontend-six-wheat.vercel.app", // production frontend (no trailing slash!)
+  "https://lms-frontend-six-wheat.vercel.app/", // production frontend (no trailing slash!)
   "http://localhost:5173",                     // local Vite dev
 ];
 
