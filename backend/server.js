@@ -12,7 +12,7 @@ const app = express();
 // ------------------- CORS CONFIG -------------------
 // ✅ Allow requests only from your Vercel frontend and local dev
 const allowedOrigins = [
-  "https://hackathon-7wwl.vercel.app", // your Vercel frontend domain
+  "https://course-frontend-lovat.vercel.app/", // your Vercel frontend domain
   "http://localhost:5173"              // local dev for Vite
 ];
 
